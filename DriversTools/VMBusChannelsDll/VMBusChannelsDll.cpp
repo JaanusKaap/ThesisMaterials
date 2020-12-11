@@ -11,15 +11,17 @@
 
 VMBUSCHANNELSDLL_API bool getVMBusChannelsCount(UINT32* count)
 {
-	DriverIO io;
-	io.init(L"\\\\.\\VMBusChannels");
+    DriverIoVMBusChannels io;
+    if (!io.init())
+        return false;
 	return io.getChannelsCount(count);
 }
 
 VMBUSCHANNELSDLL_API bool getVMBusChannelsData(VMBusChannel** data, UINT32* count)
 {
-	DriverIO io;
-	io.init(L"\\\\.\\VMBusChannels");
+    DriverIoVMBusChannels io;
+    if (!io.init())
+        return false;
 	return io.getChannelsData(data, count);
 }
 

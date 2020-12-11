@@ -5,12 +5,16 @@
 
 class DriverIO
 {
-private:
+protected:
 	HANDLE handle = INVALID_HANDLE_VALUE;
-
-public:
-	bool init(const  wchar_t* device);
+	bool initInner(const  wchar_t* device);
 	bool devIOctrl(DWORD code, PVOID inBuffer, DWORD inBufferSize, PVOID outBuffer, DWORD* outBufferSize);
+};
+
+class DriverIoVMBusChannels:public DriverIO
+{
+public:
+	bool init();
 
 	//VMBusChannels driver
 	bool getChannelsCount(UINT32* count);

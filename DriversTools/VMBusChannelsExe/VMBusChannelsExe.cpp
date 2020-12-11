@@ -5,8 +5,8 @@
 
 int main()
 {
-	DriverIO io;
-	if (!io.init(L"\\\\.\\VMBusChannels"))
+	DriverIoVMBusChannels io;
+	if (!io.init())
 		errorAndReturn("Could not open handler to driver");
 	UINT32 count;
 	if (!io.getChannelsCount(&count))
@@ -17,7 +17,7 @@ int main()
 	if (!io.getChannelsData(&data , &count))
 		errorAndReturn("Could not get channels data");
 
-	for (int x = 0; x < count; x++)
+	for (UINT32 x = 0; x < count; x++)
 	{
 		std::cout << "Channel at 0x" << std::hex << data[x].baseAddress << std::endl;
 

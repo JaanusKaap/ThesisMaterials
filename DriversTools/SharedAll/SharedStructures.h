@@ -31,6 +31,8 @@ typedef struct VMBusChannelData
 typedef struct VMBusInteceptConf
 {
 	UINT64 channel;
-	UINT8 logInDebug;
-	UINT8 writeToFile;
+	UINT32 count;
+	UINT8 logToDebug;
+	UINT8 logToDebugAndBreak;
+	UINT8 logToFile;
 }VMBusInteceptConf;

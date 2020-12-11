@@ -14,12 +14,14 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\VMBusChannels\CodeFromOthers.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\VMBusChannels\conf.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\VMBusChannels\VMBusChannel.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CodeFromOthers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)conf.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)VMBusChannel.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)VMBusIntercept.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\VMBusChannels\CodeFromOthers.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\VMBusChannels\VMBusChannel.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)CodeFromOthers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)VMBusChannel.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)VMBusIntercept.cpp" />
   </ItemGroup>
 </Project>

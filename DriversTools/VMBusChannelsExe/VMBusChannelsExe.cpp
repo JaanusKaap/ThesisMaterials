@@ -3,6 +3,47 @@
 
 #define errorAndReturn(msg) {std::cout << msg << std::endl; return 0;}
 
+std::ostream& operator<<(std::ostream& os, REFGUID guid) {
+
+	os << std::uppercase;
+	os.width(8);
+	os.fill('0');
+	os << std::hex << guid.Data1 << '-';
+	os.width(4);
+	os.fill('0');
+	os << std::hex << guid.Data2 << '-';
+	os.width(4);
+	os.fill('0');
+	os << std::hex << guid.Data3 << '-';
+	os.width(2);
+	os.fill('0');
+	os << std::hex << static_cast<short>(guid.Data4[0]);
+	os.width(2);
+	os.fill('0');
+	os << std::hex << static_cast<short>(guid.Data4[1]);
+	os << std::hex << '-';
+	os.width(2);
+	os.fill('0');
+	os << std::hex << static_cast<short>(guid.Data4[2]);
+	os.width(2);
+	os.fill('0');
+	os << std::hex << static_cast<short>(guid.Data4[3]);
+	os.width(2);
+	os.fill('0');
+	os << std::hex << static_cast<short>(guid.Data4[4]);
+	os.width(2);
+	os.fill('0');
+	os << std::hex << static_cast<short>(guid.Data4[5]);
+	os.width(2);
+	os.fill('0');
+	os << std::hex << static_cast<short>(guid.Data4[6]);
+	os.width(2);
+	os.fill('0');
+	os << std::hex << static_cast<short>(guid.Data4[7]);
+	os << std::nouppercase;
+	return os;
+}
+
 int main()
 {
 	DriverIoVMBusChannels io;
@@ -22,6 +63,9 @@ int main()
 		std::cout << "Channel at 0x" << std::hex << data[x].baseAddress << std::endl;
 
 		std::cout << "  >baseAddress = 0x" << std::hex << data[x].baseAddress << std::endl;
+		std::cout << "  >interfaceType = " << data[x].interfaceType << std::endl;
+		std::cout << "  >interfaceInstance = " << data[x].interfaceInstance << std::endl;
+		std::cout << "  >vmId = " << data[x].vmId << std::endl;
 		std::cout << "  >maxPacketCount = 0x" << std::hex << data[x].maxPacketCount << std::endl;
 		std::cout << "  >maxPacketSize = 0x" << std::hex << data[x].maxPacketSize << std::endl;
 		std::cout << "  >clientContextSize = 0x" << std::hex << data[x].clientContextSize << std::endl;

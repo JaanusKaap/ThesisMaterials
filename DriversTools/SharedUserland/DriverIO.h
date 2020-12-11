@@ -1,5 +1,6 @@
 #pragma once
 #include<Windows.h>
+#include<string>
 #include"IOCTLs.h"
 #include"SharedStructures.h"
 
@@ -11,12 +12,25 @@ protected:
 	bool devIOctrl(DWORD code, PVOID inBuffer, DWORD inBufferSize, PVOID outBuffer, DWORD* outBufferSize);
 };
 
-class DriverIoVMBusChannels:public DriverIO
+
+//VMBusChannels driver
+class DriverIoVMBusChannels :public DriverIO
 {
 public:
 	bool init();
 
-	//VMBusChannels driver
 	bool getChannelsCount(UINT32* count);
 	bool getChannelsData(VMBusChannelData** data, UINT32* count);
+};
+
+
+//VMBusChannels driver
+class DriverIoVMBusIntercept :public DriverIO
+{
+public:
+	bool init();
+
+	bool hookChannel(VMBusInteceptConf*);
+	bool unhookChannel();
+	bool setFilename(std::string filename);
 };

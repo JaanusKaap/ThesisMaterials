@@ -17,6 +17,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VMBusIntercept", "VMBusInte
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SharedKernel", "SharedKernel\SharedKernel.vcxitems", "{0F969B84-076F-44D9-9048-236161F8B0C6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VMBusInterceptDll", "VMBusInterceptDll\VMBusInterceptDll.vcxproj", "{C364C4A8-CE0A-49C6-9D4C-9ADC05A9CAD9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VMBusInterceptExe", "VMBusInterceptExe\VMBusInterceptExe.vcxproj", "{ACC0DD40-5713-4D5C-A853-8006F81EE24E}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		SharedKernel\SharedKernel.vcxitems*{0f969b84-076f-44d9-9048-236161f8b0c6}*SharedItemsImports = 9
@@ -25,6 +29,8 @@ Global
 		SharedUserland\SharedUserland.vcxitems*{41f3f3ba-bc38-4bd2-9e2a-eed061e6166e}*SharedItemsImports = 9
 		SharedAll\SharedAll.vcxitems*{751dbe18-e004-4ce7-a5fc-0e499ce775fe}*SharedItemsImports = 4
 		SharedUserland\SharedUserland.vcxitems*{751dbe18-e004-4ce7-a5fc-0e499ce775fe}*SharedItemsImports = 4
+		SharedAll\SharedAll.vcxitems*{acc0dd40-5713-4d5c-a853-8006f81ee24e}*SharedItemsImports = 4
+		SharedUserland\SharedUserland.vcxitems*{acc0dd40-5713-4d5c-a853-8006f81ee24e}*SharedItemsImports = 4
 		SharedAll\SharedAll.vcxitems*{c3cf6bf8-88d1-4d9f-9992-54f773c60823}*SharedItemsImports = 4
 		SharedUserland\SharedUserland.vcxitems*{c3cf6bf8-88d1-4d9f-9992-54f773c60823}*SharedItemsImports = 4
 		SharedAll\SharedAll.vcxitems*{c5bda68b-4e03-4ce9-a8d6-f41dde0f95af}*SharedItemsImports = 4
@@ -100,6 +106,30 @@ Global
 		{2F00C238-D2F3-4A8F-96EB-2F918CB23227}.Release|x86.ActiveCfg = Release|Win32
 		{2F00C238-D2F3-4A8F-96EB-2F918CB23227}.Release|x86.Build.0 = Release|Win32
 		{2F00C238-D2F3-4A8F-96EB-2F918CB23227}.Release|x86.Deploy.0 = Release|Win32
+		{C364C4A8-CE0A-49C6-9D4C-9ADC05A9CAD9}.Debug|ARM.ActiveCfg = Debug|Win32
+		{C364C4A8-CE0A-49C6-9D4C-9ADC05A9CAD9}.Debug|ARM64.ActiveCfg = Debug|Win32
+		{C364C4A8-CE0A-49C6-9D4C-9ADC05A9CAD9}.Debug|x64.ActiveCfg = Debug|x64
+		{C364C4A8-CE0A-49C6-9D4C-9ADC05A9CAD9}.Debug|x64.Build.0 = Debug|x64
+		{C364C4A8-CE0A-49C6-9D4C-9ADC05A9CAD9}.Debug|x86.ActiveCfg = Debug|Win32
+		{C364C4A8-CE0A-49C6-9D4C-9ADC05A9CAD9}.Debug|x86.Build.0 = Debug|Win32
+		{C364C4A8-CE0A-49C6-9D4C-9ADC05A9CAD9}.Release|ARM.ActiveCfg = Release|Win32
+		{C364C4A8-CE0A-49C6-9D4C-9ADC05A9CAD9}.Release|ARM64.ActiveCfg = Release|Win32
+		{C364C4A8-CE0A-49C6-9D4C-9ADC05A9CAD9}.Release|x64.ActiveCfg = Release|x64
+		{C364C4A8-CE0A-49C6-9D4C-9ADC05A9CAD9}.Release|x64.Build.0 = Release|x64
+		{C364C4A8-CE0A-49C6-9D4C-9ADC05A9CAD9}.Release|x86.ActiveCfg = Release|Win32
+		{C364C4A8-CE0A-49C6-9D4C-9ADC05A9CAD9}.Release|x86.Build.0 = Release|Win32
+		{ACC0DD40-5713-4D5C-A853-8006F81EE24E}.Debug|ARM.ActiveCfg = Debug|Win32
+		{ACC0DD40-5713-4D5C-A853-8006F81EE24E}.Debug|ARM64.ActiveCfg = Debug|Win32
+		{ACC0DD40-5713-4D5C-A853-8006F81EE24E}.Debug|x64.ActiveCfg = Debug|x64
+		{ACC0DD40-5713-4D5C-A853-8006F81EE24E}.Debug|x64.Build.0 = Debug|x64
+		{ACC0DD40-5713-4D5C-A853-8006F81EE24E}.Debug|x86.ActiveCfg = Debug|Win32
+		{ACC0DD40-5713-4D5C-A853-8006F81EE24E}.Debug|x86.Build.0 = Debug|Win32
+		{ACC0DD40-5713-4D5C-A853-8006F81EE24E}.Release|ARM.ActiveCfg = Release|Win32
+		{ACC0DD40-5713-4D5C-A853-8006F81EE24E}.Release|ARM64.ActiveCfg = Release|Win32
+		{ACC0DD40-5713-4D5C-A853-8006F81EE24E}.Release|x64.ActiveCfg = Release|x64
+		{ACC0DD40-5713-4D5C-A853-8006F81EE24E}.Release|x64.Build.0 = Release|x64
+		{ACC0DD40-5713-4D5C-A853-8006F81EE24E}.Release|x86.ActiveCfg = Release|Win32
+		{ACC0DD40-5713-4D5C-A853-8006F81EE24E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

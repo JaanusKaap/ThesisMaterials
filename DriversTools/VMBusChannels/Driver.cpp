@@ -1,12 +1,12 @@
 #include<ntddk.h>
 #include<ntstatus.h>
-#include "VMBusChannel.h"
+#include "VMBusIntercept.h"
 #include "IOCTLs.h"
 
 #define DEVICE_NAME L"\\Device\\VMBusIntercept"
 #define SYMBOLIC_LINK_NAME L"\\DosDevices\\VMBusIntercept"
 
-VMBusChannel vmBusObject;
+VMBusIntercept vmBusObject;
 NTSTATUS DriverIoControl(PDEVICE_OBJECT DeviceObject, PIRP Irp);
 NTSTATUS TracedrvDispatchOpenClose(IN PDEVICE_OBJECT pDO, IN PIRP Irp);
 VOID DriverUnload(PDRIVER_OBJECT  DriverObject);
@@ -50,6 +50,7 @@ NTSTATUS TracedrvDispatchOpenClose(IN PDEVICE_OBJECT pDO, IN PIRP Irp)
 
 VOID DriverUnload(PDRIVER_OBJECT  DriverObject)
 {
+	vmBusObject.unhook();
 	UNICODE_STRING usDosDeviceName;
 	RtlInitUnicodeString(&usDosDeviceName, SYMBOLIC_LINK_NAME);
 	IoDeleteSymbolicLink(&usDosDeviceName);
@@ -65,48 +66,41 @@ NTSTATUS DriverIoControl(PDEVICE_OBJECT DeviceObject, PIRP Irp)
 
 	if (pIoStackIrp)
 	{
-#ifdef _DEBUG
-		DbgPrint("DriverIoControl called with control code 0x%X\n", pIoStackIrp->Parameters.DeviceIoControl.IoControlCode);
-#endif
 		switch (pIoStackIrp->Parameters.DeviceIoControl.IoControlCode)
 		{
-		case IOCTL_GET_CHANNELS_COUNT:
-			if (pIoStackIrp->Parameters.DeviceIoControl.OutputBufferLength < sizeof(UINT32))
+		case IOCTL_INTERCEPT_CHANNELS_HOOK:
+		{
+			if (pIoStackIrp->Parameters.DeviceIoControl.InputBufferLength < sizeof(VMBusInteceptConf))
 			{
-				NtStatus = STATUS_BUFFER_OVERFLOW;
+				NtStatus = STATUS_NDIS_INVALID_LENGTH;
 				break;
 			}
-			*(UINT32*)Irp->AssociatedIrp.SystemBuffer = vmBusObject.getChannelCount();
-			NtStatus = STATUS_SUCCESS;
-			dataLen = sizeof(UINT32);
-			break;
-		case IOCTL_GET_CHANNELS_DATA:
-			UINT32 count = vmBusObject.getChannelCount();
-			if (pIoStackIrp->Parameters.DeviceIoControl.OutputBufferLength < sizeof(VMBusChannel) * count)
-			{
-				NtStatus = STATUS_BUFFER_OVERFLOW;
-				break;
-			}
-			memset(Irp->AssociatedIrp.SystemBuffer, 0, pIoStackIrp->Parameters.DeviceIoControl.OutputBufferLength);
-			VMBusChannelData* data = (VMBusChannelData*)Irp->AssociatedIrp.SystemBuffer;
-			void* ptr = vmBusObject.getFirstChannel();
-			UINT32 x;
-			for (x = 0; x < count; x++)
-			{
-				if (ptr == NULL)
-					break;
-				vmBusObject.getChannelData(ptr, data + x);
-				ptr = vmBusObject.getNextChannel(ptr);
-			}
-			NtStatus = STATUS_SUCCESS;
-			dataLen = sizeof(VMBusChannel) * x;
+			VMBusInteceptConf* conf = (VMBusInteceptConf*)Irp->AssociatedIrp.SystemBuffer;
+			if (vmBusObject.hook(conf))
+				NtStatus = STATUS_SUCCESS;
+			else
+				NtStatus = STATUS_UNSUCCESSFUL;
 			break;
 		}
+		case IOCTL_INTERCEPT_CHANNELS_UNHOOK:
+			if (vmBusObject.unhook())
+				NtStatus = STATUS_SUCCESS;
+			else
+				NtStatus = STATUS_UNSUCCESSFUL;
+			break;
+		case IOCTL_INTERCEPT_SET_FILENAME:
+			char* filename = (char*)Irp->AssociatedIrp.SystemBuffer;
+			if (vmBusObject.setFilename(filename))
+				NtStatus = STATUS_SUCCESS;
+			else
+				NtStatus = STATUS_UNSUCCESSFUL;
+			break;
+		}
+
 	}
 
 	Irp->IoStatus.Status = NtStatus;
 	Irp->IoStatus.Information = dataLen;
 	IoCompleteRequest(Irp, IO_NO_INCREMENT);
-
 	return NtStatus;
 }

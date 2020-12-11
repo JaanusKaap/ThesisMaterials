@@ -1,5 +1,6 @@
 #include "DriverIO.h"
 
+
 bool DriverIO::initInner(const wchar_t* device)
 {
 	handle = CreateFile(device, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
@@ -22,7 +23,9 @@ bool DriverIO::devIOctrl(DWORD code, PVOID inBuffer, DWORD inBufferSize, PVOID o
 	return result;
 }
 
-
+////////////////////////
+////DriverIoVMBusChannels
+////////////////////////
 bool DriverIoVMBusChannels::init()
 {
 	return initInner(L"\\\\.\\VMBusChannels");
@@ -50,4 +53,40 @@ bool DriverIoVMBusChannels::getChannelsData(VMBusChannelData** data, UINT32* cou
 		return false;
 	*count = size / sizeof(VMBusChannelData);
 	return true;
+}
+
+////////////////////////
+////DriverIoVMBusIntercept
+////////////////////////
+bool DriverIoVMBusIntercept::init()
+{
+	return initInner(L"\\\\.\\VMBusIntercept");
+}
+
+bool DriverIoVMBusIntercept::hookChannel(VMBusInteceptConf* conf)
+{
+	if (handle == INVALID_HANDLE_VALUE)
+		return false;
+	if (devIOctrl(IOCTL_INTERCEPT_CHANNELS_HOOK, conf, sizeof(VMBusInteceptConf), NULL, NULL))
+		return true;
+	return false;
+}
+
+bool DriverIoVMBusIntercept::unhookChannel()
+{
+	if (handle == INVALID_HANDLE_VALUE)
+		return false;
+	if (devIOctrl(IOCTL_INTERCEPT_CHANNELS_UNHOOK, NULL, 0, NULL, NULL))
+		return true;
+	return false;
+}
+
+bool DriverIoVMBusIntercept::setFilename(std::string filename)
+{
+	if (handle == INVALID_HANDLE_VALUE)
+		return false;
+	std::string filenameWithDD = "\\DosDevices\\" + filename;
+	if (devIOctrl(IOCTL_INTERCEPT_SET_FILENAME, (void*)filenameWithDD.c_str(), filenameWithDD.length()+1, NULL, NULL))
+		return true;
+	return false;
 }

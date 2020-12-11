@@ -1,0 +1,4 @@
+DriversTools/.vs
+DriversTools/x64
+DriversTools/*/x64
+DriversTools/*/Debug

@@ -18,5 +18,5 @@ public:
 
 	//VMBusChannels driver
 	bool getChannelsCount(UINT32* count);
-	bool getChannelsData(VMBusChannel** data, UINT32* count);
+	bool getChannelsData(VMBusChannelData** data, UINT32* count);
 };

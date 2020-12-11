@@ -38,16 +38,16 @@ bool DriverIoVMBusChannels::getChannelsCount(UINT32* count)
 	return false;
 }
 
-bool DriverIoVMBusChannels::getChannelsData(VMBusChannel** data, UINT32* count)
+bool DriverIoVMBusChannels::getChannelsData(VMBusChannelData** data, UINT32* count)
 {
 	if (!getChannelsCount(count))
 		return false;
-	*data = new VMBusChannel[*count];
+	*data = new VMBusChannelData[*count];
 	if (*data == NULL)
 		return false;
-	DWORD size = sizeof(VMBusChannel) * (*count);
+	DWORD size = sizeof(VMBusChannelData) * (*count);
 	if (!devIOctrl(IOCTL_GET_CHANNELS_DATA, NULL, 0, *data, &size))
 		return false;
-	*count = size / sizeof(VMBusChannel);
+	*count = size / sizeof(VMBusChannelData);
 	return true;
 }

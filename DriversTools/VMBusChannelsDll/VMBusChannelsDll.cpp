@@ -17,7 +17,7 @@ VMBUSCHANNELSDLL_API bool getVMBusChannelsCount(UINT32* count)
 	return io.getChannelsCount(count);
 }
 
-VMBUSCHANNELSDLL_API bool getVMBusChannelsData(VMBusChannel** data, UINT32* count)
+VMBUSCHANNELSDLL_API bool getVMBusChannelsData(VMBusChannelData** data, UINT32* count)
 {
     DriverIoVMBusChannels io;
     if (!io.init())

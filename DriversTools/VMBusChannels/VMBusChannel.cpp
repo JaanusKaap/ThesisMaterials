@@ -2,14 +2,14 @@
 #include "CodeFromOthers.h"
 #include "conf.h"
 
-void* getKmclChannelListLocation()
+void* VMBusChannel::getKmclChannelListLocation()
 {
 	char* ptr = (char*)KernelGetModuleBase("vmbkmclr.sys");
 	ptr += VMBUS_OFFSET_FROM_VMBKMCLR_BASE;
 	return ptr;
 }
 
-void* getFirstChannel()
+void* VMBusChannel::getFirstChannel()
 {
 	void* ptr = getKmclChannelListLocation();
 	if (ptr == *((void**)ptr))
@@ -18,7 +18,7 @@ void* getFirstChannel()
 	return getChannelFromLinkListPtr(ptr);
 }
 
-void* getNextChannel(void* ptr)
+void* VMBusChannel::getNextChannel(void* ptr)
 {
 	ptr = *(void**)(((char*)ptr) + VMBUS_CHANNEL_OFFSET_LINKED_LIST);
 	if (ptr == getKmclChannelListLocation())
@@ -26,33 +26,33 @@ void* getNextChannel(void* ptr)
 	return getChannelFromLinkListPtr(ptr);
 }
 
-void* getChannelFromLinkListPtr(void* ptr)
+void* VMBusChannel::getChannelFromLinkListPtr(void* ptr)
 {
 	return (((char*)ptr) - VMBUS_CHANNEL_OFFSET_LINKED_LIST);
 }
 
 
-UINT8 getInt8FromChannel(void* channel, UINT32 offset)
+UINT8 VMBusChannel::getInt8FromChannel(void* channel, UINT32 offset)
 {
 	return *(((UINT8*)channel) + offset);
 }
 
-UINT32 getInt32FromChannel(void* channel, UINT32 offset)
+UINT32 VMBusChannel::getInt32FromChannel(void* channel, UINT32 offset)
 {
 	return *(UINT32*)(((UINT8*)channel) + offset);
 }
 
-UINT64 getInt64FromChannel(void* channel, UINT32 offset)
+UINT64 VMBusChannel::getInt64FromChannel(void* channel, UINT32 offset)
 {
 	return *(UINT64*)(((UINT8*)channel) + offset);
 }
 
-void getBufferFromChannel(void* channel, UINT32 offset, void* buffer, UINT32 size)
+void VMBusChannel::getBufferFromChannel(void* channel, UINT32 offset, void* buffer, UINT32 size)
 {
 	memcpy(buffer, ((UINT8*)channel) + offset, size);
 }
 
-UINT32 getChannelCount()
+UINT32 VMBusChannel::getChannelCount()
 {
 	UINT32 count = 0;
 	for (void* ptr = getFirstChannel(); ptr; ptr = getNextChannel(ptr))
@@ -61,7 +61,7 @@ UINT32 getChannelCount()
 
 }
 
-bool getChannelData(void* channel, VMBusChannel* data)
+bool VMBusChannel::getChannelData(void* channel, VMBusChannelData* data)
 {
 	data->baseAddress = (UINT64)channel;
 	data->maxPacketCount = getInt32FromChannel(channel, VMBUS_CHANNEL_OFFSET_MAX_PACKET_COUNT);

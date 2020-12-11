@@ -13,7 +13,7 @@ int main()
 		errorAndReturn("Could not get count of channels");
 	std::cout << "There are " << count << " channels" << std::endl;
 	
-	VMBusChannel* data;
+	VMBusChannelData* data;
 	if (!io.getChannelsData(&data , &count))
 		errorAndReturn("Could not get channels data");
 

@@ -43,6 +43,7 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
     <Import Project="..\SharedAll\SharedAll.vcxitems" Label="Shared" />
+    <Import Project="..\SharedKernel\SharedKernel.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -69,14 +70,7 @@
     <FilesToPackage Include="$(TargetPath)" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CodeFromOthers.cpp" />
     <ClCompile Include="Driver.cpp" />
-    <ClCompile Include="VMBusChannel.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CodeFromOthers.h" />
-    <ClInclude Include="conf.h" />
-    <ClInclude Include="VMBusChannel.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

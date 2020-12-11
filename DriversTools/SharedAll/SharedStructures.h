@@ -5,7 +5,7 @@
 #include<windows.h>
 #endif
 
-typedef struct VMBusChannel
+typedef struct VMBusChannelData
 {
 	UINT64 baseAddress;
 	UINT32 maxPacketCount;
@@ -26,4 +26,11 @@ typedef struct VMBusChannel
 	UINT64 channelPostStartedCallback;
 	wchar_t name[64];
 	UINT64 pointer;
-}VMBusChannel;
+}VMBusChannelData;
+
+typedef struct VMBusInteceptConf
+{
+	UINT64 channel;
+	UINT8 logInDebug;
+	UINT8 writeToFile;
+}VMBusInteceptConf;

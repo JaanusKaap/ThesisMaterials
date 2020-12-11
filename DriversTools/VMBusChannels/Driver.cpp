@@ -1,10 +1,12 @@
 #include<ntddk.h>
+#include<ntstatus.h>
 #include "VMBusChannel.h"
 #include "IOCTLs.h"
 
-#define DEVICE_NAME L"\\Device\\VMBusChannels"
-#define SYMBOLIC_LINK_NAME L"\\DosDevices\\VMBusChannels"
+#define DEVICE_NAME L"\\Device\\VMBusIntercept"
+#define SYMBOLIC_LINK_NAME L"\\DosDevices\\VMBusIntercept"
 
+VMBusChannel vmBusObject;
 NTSTATUS DriverIoControl(PDEVICE_OBJECT DeviceObject, PIRP Irp);
 NTSTATUS TracedrvDispatchOpenClose(IN PDEVICE_OBJECT pDO, IN PIRP Irp);
 VOID DriverUnload(PDRIVER_OBJECT  DriverObject);
@@ -74,27 +76,27 @@ NTSTATUS DriverIoControl(PDEVICE_OBJECT DeviceObject, PIRP Irp)
 				NtStatus = STATUS_BUFFER_OVERFLOW;
 				break;
 			}
-			*(UINT32*)Irp->AssociatedIrp.SystemBuffer = getChannelCount();
+			*(UINT32*)Irp->AssociatedIrp.SystemBuffer = vmBusObject.getChannelCount();
 			NtStatus = STATUS_SUCCESS;
 			dataLen = sizeof(UINT32);
 			break;
 		case IOCTL_GET_CHANNELS_DATA:
-			UINT32 count = getChannelCount();
+			UINT32 count = vmBusObject.getChannelCount();
 			if (pIoStackIrp->Parameters.DeviceIoControl.OutputBufferLength < sizeof(VMBusChannel) * count)
 			{
 				NtStatus = STATUS_BUFFER_OVERFLOW;
 				break;
 			}
 			memset(Irp->AssociatedIrp.SystemBuffer, 0, pIoStackIrp->Parameters.DeviceIoControl.OutputBufferLength);
-			VMBusChannel* data = (VMBusChannel*)Irp->AssociatedIrp.SystemBuffer;
-			void* ptr = getFirstChannel();
+			VMBusChannelData* data = (VMBusChannelData*)Irp->AssociatedIrp.SystemBuffer;
+			void* ptr = vmBusObject.getFirstChannel();
 			UINT32 x;
 			for (x = 0; x < count; x++)
 			{
 				if (ptr == NULL)
 					break;
-				getChannelData(ptr, data + x);
-				ptr = getNextChannel(ptr);
+				vmBusObject.getChannelData(ptr, data + x);
+				ptr = vmBusObject.getNextChannel(ptr);
 			}
 			NtStatus = STATUS_SUCCESS;
 			dataLen = sizeof(VMBusChannel) * x;

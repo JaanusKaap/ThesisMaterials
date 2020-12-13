@@ -36,3 +36,10 @@ typedef struct VMBusInteceptConf
 	UINT8 logToDebugAndBreak;
 	UINT8 logToFile;
 }VMBusInteceptConf;
+
+typedef struct VMBusFuzzConf
+{
+	UINT64 channel;
+	UINT32 count, minChanges, maxChanges;
+	UINT8 main, mdl;
+}VMBusFuzzConf;

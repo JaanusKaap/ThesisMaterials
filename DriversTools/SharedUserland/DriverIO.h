@@ -24,7 +24,7 @@ public:
 };
 
 
-//VMBusChannels driver
+//VMBusIntercept driver
 class DriverIoVMBusIntercept :public DriverIO
 {
 public:
@@ -33,4 +33,14 @@ public:
 	bool hookChannel(VMBusInteceptConf*);
 	bool unhookChannel();
 	bool setFilename(std::string filename);
+};
+
+//VMBusFuzzer driver
+class DriverIoVMBusFuzzer :public DriverIO
+{
+public:
+	bool init();
+
+	bool fuzz(VMBusFuzzConf*);
+	bool stopFuzz();
 };

@@ -39,7 +39,7 @@ bool VMBusIntercept::hook(VMBusInteceptConf* conf)
 	logToDebug = (conf->logToDebug & 1) > 0;
 	logToDebugAndBreak = (conf->logToDebugAndBreak & 1) > 0;
 	originalHandler = (ChannelHandlerFunction)getInt64FromChannel(addr, VMBUS_CHANNEL_OFFSET_PROCESS_PACKET_CALLBACK);
-	setInt64ToChannel(addr, VMBUS_CHANNEL_OFFSET_PROCESS_PACKET_CALLBACK, (UINT64)&hookHandler);
+	setInt64ToChannel(addr, VMBUS_CHANNEL_OFFSET_PROCESS_PACKET_CALLBACK, getHookHandler());
 	return true;
 }
 
@@ -148,4 +148,9 @@ void VMBusIntercept::fileLogRoutine(PVOID Parameter)
 			ExFreePool(data->external);
 		ExFreePool(data);
 	}
+}
+
+UINT64 VMBusIntercept::getHookHandler()
+{
+	return (UINT64)&hookHandler;
 }

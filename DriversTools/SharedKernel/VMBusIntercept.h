@@ -28,6 +28,7 @@ protected:
 	static void fileLogRoutine(PVOID Parameter);
 
 	void setInt64ToChannel(void* channel, UINT32 offset, UINT64 value);
+	virtual UINT64 getHookHandler();
 
 public:
 	bool hook(VMBusInteceptConf*);

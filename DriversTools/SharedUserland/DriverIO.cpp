@@ -86,7 +86,35 @@ bool DriverIoVMBusIntercept::setFilename(std::string filename)
 	if (handle == INVALID_HANDLE_VALUE)
 		return false;
 	std::string filenameWithDD = "\\DosDevices\\" + filename;
-	if (devIOctrl(IOCTL_INTERCEPT_SET_FILENAME, (void*)filenameWithDD.c_str(), filenameWithDD.length()+1, NULL, NULL))
+	if (devIOctrl(IOCTL_INTERCEPT_SET_FILENAME, (void*)filenameWithDD.c_str(), (DWORD)filenameWithDD.length()+1, NULL, NULL))
+		return true;
+	return false;
+}
+
+
+
+////////////////////////
+////DriverIoVMBusFuzzer
+////////////////////////
+bool DriverIoVMBusFuzzer::init()
+{
+	return initInner(L"\\\\.\\VMBusFuzzer");
+}
+
+bool DriverIoVMBusFuzzer::fuzz(VMBusFuzzConf* conf)
+{
+	if (handle == INVALID_HANDLE_VALUE)
+		return false;
+	if (devIOctrl(IOCTL_FUZZER_FUZZ, conf, sizeof(VMBusFuzzConf), NULL, NULL))
+		return true;
+	return false;
+}
+
+bool DriverIoVMBusFuzzer::stopFuzz()
+{
+	if (handle == INVALID_HANDLE_VALUE)
+		return false;
+	if (devIOctrl(IOCTL_INTERCEPT_CHANNELS_UNHOOK, NULL, 0, NULL, NULL))
 		return true;
 	return false;
 }

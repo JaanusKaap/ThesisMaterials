@@ -31,6 +31,8 @@ Global
 		SharedUserland\SharedUserland.vcxitems*{751dbe18-e004-4ce7-a5fc-0e499ce775fe}*SharedItemsImports = 4
 		SharedAll\SharedAll.vcxitems*{acc0dd40-5713-4d5c-a853-8006f81ee24e}*SharedItemsImports = 4
 		SharedUserland\SharedUserland.vcxitems*{acc0dd40-5713-4d5c-a853-8006f81ee24e}*SharedItemsImports = 4
+		SharedAll\SharedAll.vcxitems*{c364c4a8-ce0a-49c6-9d4c-9adc05a9cad9}*SharedItemsImports = 4
+		SharedUserland\SharedUserland.vcxitems*{c364c4a8-ce0a-49c6-9d4c-9adc05a9cad9}*SharedItemsImports = 4
 		SharedAll\SharedAll.vcxitems*{c3cf6bf8-88d1-4d9f-9992-54f773c60823}*SharedItemsImports = 4
 		SharedUserland\SharedUserland.vcxitems*{c3cf6bf8-88d1-4d9f-9992-54f773c60823}*SharedItemsImports = 4
 		SharedAll\SharedAll.vcxitems*{c5bda68b-4e03-4ce9-a8d6-f41dde0f95af}*SharedItemsImports = 4
